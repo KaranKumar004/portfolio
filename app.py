@@ -1,17 +1,22 @@
 import streamlit as st
 import base64
 
-# 1. Page Config always comes first
+# 1. Page Config
 st.set_page_config(page_title="Karan Kumar Portfolio", layout="wide", initial_sidebar_state="collapsed")
 
-# 2. Define the background image variable (so the CSS below can find it)
+# 2. Define the background image variable
 def get_base64(bin_file):
     with open(bin_file, 'rb') as f:
         return base64.b64encode(f.read()).decode()
 
-bg_img = get_base64("assets/images/new1.jpg") 
+# Using your new background image name
+try:
+    bg_img = get_base64("assets/images/new1.jpg") 
+except FileNotFoundError:
+    # Fallback if the name is different
+    bg_img = ""
 
-# 3. ADD YOUR CSS BLOCK RIGHT HERE
+# 3. CSS BLOCK (High-Contrast & Top Nav)
 st.markdown(f"""
 <style>
     .stApp {{
@@ -25,7 +30,7 @@ st.markdown(f"""
     .nav-container {{
         display: flex;
         justify-content: center;
-        gap: 20px;
+        gap: 15px;
         padding: 15px;
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(10px);
@@ -41,9 +46,10 @@ st.markdown(f"""
         color: white !important;
         text-decoration: none !important;
         font-weight: 600;
-        padding: 8px 20px;
+        padding: 8px 15px;
         border-radius: 20px;
         transition: 0.3s;
+        font-size: 0.9rem;
     }}
     
     .nav-link:hover {{
@@ -56,21 +62,20 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 
-# 4. Top Navigation Bar (HTML)
-# We use target="_self" to ensure it opens in the same tab
+# 4. Top Navigation Bar (Updated with Certifications)
 st.markdown(f"""
 <div class="nav-container">
-    <a class="nav-link" href="/?page=home" target="_self"> Home</a>
-    <a class="nav-link" href="/?page=about" target="_self"> About</a>
-    <a class="nav-link" href="/?page=skills" target="_self"> Skills</a>
-    <a class="nav-link" href="/?page=projects" target="_self"> Projects</a>
-    <a class="nav-link" href="/?page=analytics" target="_self"> Analytics</a>
-    <a class="nav-link" href="/?page=contact" target="_self"> Contact</a>
+    <a class="nav-link" href="/?page=home" target="_self">Home</a>
+    <a class="nav-link" href="/?page=about" target="_self">About</a>
+    <a class="nav-link" href="/?page=skills" target="_self">Skills</a>
+    <a class="nav-link" href="/?page=projects" target="_self">Projects</a>
+    <a class="nav-link" href="/?page=analytics" target="_self">Analytics</a>
+    <a class="nav-link" href="/?page=certs" target="_self">Certifications</a>
+    <a class="nav-link" href="/?page=contact" target="_self">Contact</a>
 </div>
 """, unsafe_allow_html=True)
 
-# 5. Routing Logic (The "Switcher")
-# This looks at the URL (e.g., ?page=skills) and loads the right file
+# 5. Routing Logic (Updated)
 query_params = st.query_params
 page = query_params.get("page", "home")
 
@@ -88,6 +93,10 @@ elif page == "projects":
         exec(f.read())
 elif page == "analytics":
     with open("pages/7_Analytics_Algorithms.py", encoding="utf-8") as f:
+        exec(f.read())
+elif page == "certs":
+    # Link to the certification page we created
+    with open("pages/5_Certifications.py", encoding="utf-8") as f:
         exec(f.read())
 elif page == "contact":
     with open("pages/6_Contact.py", encoding="utf-8") as f:
