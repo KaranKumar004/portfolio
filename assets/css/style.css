@@ -1,0 +1,37 @@
+/* Main Background Gradient */
+.stApp {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    background-attachment: fixed;
+    color: #ffffff;
+}
+
+/* Glassmorphism Card Styling */
+div[data-testid="stVerticalBlock"] > div:has(div.glass-card) {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    margin-bottom: 20px;
+}
+
+/* Glowing Headers */
+h1, h2, h3 {
+    color: #00d2ff !important;
+    text-shadow: 0px 0px 10px rgba(0, 210, 255, 0.3);
+}
+
+/* Button Styling */
+.stButton>button {
+    background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s all ease;
+}
+
+.stButton>button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 15px rgba(0, 210, 255, 0.6);
+}
