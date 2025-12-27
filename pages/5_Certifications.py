@@ -1,82 +1,52 @@
 import streamlit as st
-import base64
-from pathlib import Path
+import os
 
-st.set_page_config(page_title="Certifications | Karan Kumar", layout="wide")
-
-# Custom Glassmorphism for the certificate cards
+# Custom CSS for the "Glass" Certificate Cards
 st.markdown("""
 <style>
     .cert-card {
         background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
+        border-radius: 12px;
         padding: 20px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-    .cert-title {
-        font-weight: 600;
-        color: #00d2ff;
         margin-bottom: 15px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    .cert-card:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #38bdf8;
+        transform: translateY(-5px);
+    }
+    .view-btn {
+        color: #38bdf8 !important;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.9rem;
     }
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🏆 Professional Credentials")
-st.write("A verified track record of my expertise in Data Analytics, Machine Learning, and Lean Process Optimization.")
+st.title("📜 Professional Certifications")
 
-CERT_PATH = Path("assets/certificates")
-pdf_files = list(CERT_PATH.glob("*.pdf"))
+# This matches the filenames in your uploaded image
+certificates = [
+    {"name": "Deloitte Strategic Analytics", "file": "Deloitte_certificate.pdf", "org": "Deloitte"},
+    {"name": "KPMG Data Analytics Virtual Experience", "file": "KPMG_certificate.pdf", "org": "KPMG"},
+    {"name": "R Programming (Johns Hopkins)", "file": "certificate R.pdf", "org": "Coursera / JHU"},
+    {"name": "Numpy and Pandas Masterclass", "file": "Numpy and Pandas Masterclass Certificate.pdf", "org": "Udemy"},
+    {"name": "Excel Fundamentals for Data Analysis", "file": "Excel Fundamentals for Data Analysis.pdf", "org": "Corporate Finance Institute"},
+    {"name": "Programming Foundations (JS, HTML, CSS)", "file": "Programming Foundations with JavaScript HTML and CSS.pdf", "org": "Duke University"},
+]
 
-def get_pdf_display(file_path):
-    with open(file_path, "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode("utf-8")
-    return f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="600px" style="border-radius:10px;"></iframe>'
+# GitHub raw link base (Replace KaranKumar004 with your username if different)
+repo_url = "https://raw.githubusercontent.com/KaranKumar004/portfolio/main/assets/certificates/"
 
-if not pdf_files:
-    st.warning("No certificates found. Please add PDF files to `assets/certificates/`.")
-else:
-    # Use columns for a grid layout
-    cols = st.columns(3, gap="large")
-    
-    for idx, pdf in enumerate(pdf_files):
-        with cols[idx % 3]:
-            # Clean up the filename for the display title
-            clean_title = pdf.stem.replace("_", " ").replace("-", " ").title()
-            
-            # Create a glass card container
-            st.markdown(f'<div class="cert-card">', unsafe_allow_html=True)
-            st.markdown(f'<div class="cert-title">📄 {clean_title}</div>', unsafe_allow_html=True)
-            
-            # Interaction: View via Expander (saves memory and space)
-            with st.expander("👁️ Quick View"):
-                st.markdown(get_pdf_display(pdf), unsafe_allow_html=True)
-            
-            # Interaction: Download
-            with open(pdf, "rb") as f:
-                st.download_button(
-                    label="⬇️ Download PDF",
-                    data=f,
-                    file_name=pdf.name,
-                    mime="application/pdf",
-                    key=f"dl_{idx}",
-                    use_container_width=True
-                )
-            st.markdown('</div>', unsafe_allow_html=True)
-
-# --- VALUE ADDED CONTENT ---
-st.write("---")
-st.markdown("""
-<div style="background: rgba(16, 185, 129, 0.1); padding: 20px; border-radius: 15px; border: 1px solid #10b981;">
-    <h4 style="color: #10b981; margin-top:0;">🌟 Highlight: Lean 1 Star Certification</h4>
-    <p style="margin-bottom:0;">This certification reflects my commitment to <b>Process Excellence</b>. 
-    I apply Lean methodologies to my data workflows to ensure that automation is not just fast, 
-    but eliminates waste and maximizes business value.</p>
-</div>
-""", unsafe_allow_html=True)
+for cert in certificates:
+    with st.container():
+        st.markdown(f"""
+        <div class="cert-card">
+            <p style="color: #38bdf8; font-size: 0.8rem; margin-bottom: 5px; font-weight: bold;">{cert['org']}</p>
+            <h3 style="margin-top: 0; color: white;">{cert['name']}</h3>
+            <a href="{repo_url}{cert['file'].replace(' ', '%20')}" target="_blank" class="view-btn">View Official Document →</a>
+        </div>
+        """, unsafe_allow_html=True)
