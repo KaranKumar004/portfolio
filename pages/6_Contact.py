@@ -78,16 +78,16 @@ col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.markdown(f"""
-    <a href="mailto:your_email@example.com" class="contact-card">
+    <a href="mailto:karankumarsk14@gmail.com" class="contact-card">
         <div class="contact-icon">📧</div>
         <div class="contact-text">Email</div>
         <p style="font-size:0.8rem; opacity:0.7;">Click to send mail</p>
     </a>
-    """, unsafe_allow_html=True)
+    """, unsafe_allow_html=True) 
 
 with col2:
     st.markdown(f"""
-    <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-card">
+    <a href="https://www.linkedin.com/public-profile/settings?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_self_edit_contact-info%3B8Bk3YPQ7TWikBarnS9WLpg%3D%3D" target="_blank" class="contact-card">
         <div class="contact-icon">💼</div>
         <div class="contact-text">LinkedIn</div>
         <p style="font-size:0.8rem; opacity:0.7;">Professional Network</p>
@@ -96,7 +96,7 @@ with col2:
 
 with col3:
     st.markdown(f"""
-    <a href="https://github.com/yourusername" target="_blank" class="contact-card">
+    <a href="https://github.com/KaranKumar004" target="_blank" class="contact-card">
         <div class="contact-icon">💻</div>
         <div class="contact-text">GitHub</div>
         <p style="font-size:0.8rem; opacity:0.7;">View My Code</p>
